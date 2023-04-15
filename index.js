@@ -4,6 +4,7 @@ const electron = require('electron');
 const { app, BrowserWindow, Tray } = electron;
 
 let mainWindow;
+let tray;
 
 app.on('ready', () => {
   mainWindow = new BrowserWindow({
@@ -11,6 +12,7 @@ app.on('ready', () => {
     height: 500,
     frame: false,
     resizable: false,
+    show: false,
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false
@@ -22,5 +24,8 @@ app.on('ready', () => {
 
   mainWindow.loadURL(`file://${__dirname}/src/index.html`);
 
-  new Tray(iconPath);
+  tray = new Tray(iconPath);
+  tray.on('click', () => {
+    mainWindow.show();
+  });
 });
