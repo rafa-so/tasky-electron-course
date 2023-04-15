@@ -26,6 +26,10 @@ app.on('ready', () => {
 
   tray = new Tray(iconPath);
   tray.on('click', () => {
-    mainWindow.show();
+    if(mainWindow.isVisible()) {
+      mainWindow.hide();
+    } else {
+      mainWindow.show();
+    }
   });
 });
