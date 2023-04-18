@@ -25,10 +25,21 @@ app.on('ready', () => {
   mainWindow.loadURL(`file://${__dirname}/src/index.html`);
 
   tray = new Tray(iconPath);
-  tray.on('click', () => {
+  tray.on('click', (event, bounds) => {
+    // click event bounds
+    const { x, y } = bounds;
+    const { height, width } = mainWindow.getBounds();
+
+
     if(mainWindow.isVisible()) {
       mainWindow.hide();
     } else {
+      mainWindow.setBounds({
+        x: x - width / 2,
+        y,
+        height,
+        width
+      });
       mainWindow.show();
     }
   });
