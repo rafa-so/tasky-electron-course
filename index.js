@@ -1,6 +1,7 @@
 const path = require('path');
 const electron = require('electron');
 const positioner = require('electron-traywindow-positioner');
+const TimerTray = require('./app/timer_tray');
 
 const { app, BrowserWindow, Tray } = electron;
 
@@ -25,14 +26,9 @@ app.on('ready', () => {
 
   mainWindow.loadURL(`file://${__dirname}/src/index.html`);
 
-  tray = new Tray(iconPath);
+  tray = new TimerTray(iconPath);
   tray.on('click', (event, bounds) => {
     // click event bounds
-    // const { x, y } = bounds;
-    const { height, width, x, y } = mainWindow.getBounds();
-    console.log('bounds: ', electron.screen.getCursorScreenPoint());
-
-
     if(mainWindow.isVisible()) {
       mainWindow.hide();
     } else {
