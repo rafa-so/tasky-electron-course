@@ -1,12 +1,10 @@
 const path = require('path');
 const electron = require('electron');
-const positioner = require('electron-traywindow-positioner');
 const TimerTray = require('./app/timer_tray');
 
-const { app, BrowserWindow, Tray } = electron;
+const { app, BrowserWindow } = electron;
 
 let mainWindow;
-let tray;
 
 app.on('ready', () => {
   mainWindow = new BrowserWindow({
@@ -26,14 +24,5 @@ app.on('ready', () => {
 
   mainWindow.loadURL(`file://${__dirname}/src/index.html`);
 
-  tray = new TimerTray(iconPath);
-  tray.on('click', (event, bounds) => {
-    // click event bounds
-    if(mainWindow.isVisible()) {
-      mainWindow.hide();
-    } else {
-      positioner.position(mainWindow, tray.getBounds());
-      mainWindow.show();
-    }
-  });
+  const tray = new TimerTray(iconPath, mainWindow);
 });
