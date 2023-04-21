@@ -1,5 +1,6 @@
 const path = require('path');
 const electron = require('electron');
+const positioner = require('electron-traywindow-positioner');
 
 const { app, BrowserWindow, Tray } = electron;
 
@@ -27,19 +28,15 @@ app.on('ready', () => {
   tray = new Tray(iconPath);
   tray.on('click', (event, bounds) => {
     // click event bounds
-    const { x, y } = bounds;
-    const { height, width } = mainWindow.getBounds();
+    // const { x, y } = bounds;
+    const { height, width, x, y } = mainWindow.getBounds();
+    console.log('bounds: ', electron.screen.getCursorScreenPoint());
 
 
     if(mainWindow.isVisible()) {
       mainWindow.hide();
     } else {
-      mainWindow.setBounds({
-        x: x - width / 2,
-        y,
-        height,
-        width
-      });
+      positioner.position(mainWindow, tray.getBounds());
       mainWindow.show();
     }
   });
