@@ -3,6 +3,7 @@ const electron = require('electron');
 const TimerTray = require('./app/timer_tray');
 
 const { app, BrowserWindow } = electron;
+let tray;
 
 let mainWindow;
 
@@ -24,5 +25,5 @@ app.on('ready', () => {
 
   mainWindow.loadURL(`file://${__dirname}/src/index.html`);
 
-  new TimerTray(iconPath, mainWindow);
+  tray = new TimerTray(iconPath, mainWindow);
 });
