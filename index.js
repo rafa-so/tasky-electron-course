@@ -24,5 +24,5 @@ app.on('ready', () => {
 
   mainWindow.loadURL(`file://${__dirname}/src/index.html`);
 
-  const tray = new TimerTray(iconPath, mainWindow);
+  new TimerTray(iconPath, mainWindow);
 });
