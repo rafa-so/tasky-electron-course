@@ -1,6 +1,6 @@
 const electron = require('electron');
 const positioner = require('electron-traywindow-positioner');
-const { Tray } = electron;
+const { Tray, app, Menu } = electron;
 
 class TimerTray extends Tray {
   constructor(iconPath, mainWindow){
@@ -9,6 +9,7 @@ class TimerTray extends Tray {
     this.mainWindow = mainWindow;
     this.setToolTip('Timer App');
 
+    this.on('right-click', this.onRightClick);
     this.on('click', this.onClick);
   }
 
@@ -19,6 +20,17 @@ class TimerTray extends Tray {
       positioner.position(this.mainWindow, this.getBounds());
       this.mainWindow.show();
     }
+  }
+
+  onRightClick = () => {
+    const menuConfig = Menu.buildFromTemplate([
+      {
+        label: 'Quit',
+        click: () => app.quit(),
+      }
+    ]);
+
+    this.popUpContextMenu(menuConfig);
   }
 }
 
